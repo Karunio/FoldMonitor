@@ -1,7 +1,7 @@
 /*
   filename - main.c
   version - 1.0
-  description - 기본 메인 함수
+  description - Watch Folder If txt file added than display txt content
   --------------------------------------------------------------------------------
   first created - 2020.02.03
   writer - Karunio
@@ -152,6 +152,7 @@ void release_txtList(TxtList* txtlist)
 
 void print_non_exist_txt(TxtList* txtlist, const dirent** namelist, int namelist_count, const char* path)
 {
+	// scandir로 받은 파일목록을 확인한다.
 	for (int i = 0; i < namelist_count; i++)
 	{
 		// 감시할 폴더의 경로와 파일이름을 합친다.
@@ -159,10 +160,11 @@ void print_non_exist_txt(TxtList* txtlist, const dirent** namelist, int namelist
 		sprintf(filepath, "%s/%s", path, namelist[i]->d_name);
 
 		// 해당 텍스트 파일이 등록이 안되어 있다면
-		// 등록 및 출력한다.
 		if (!check_list(txtlist, filepath))
 		{
+			// 파일을 출력하고
 			file_print(filepath);
+			// 리스트에 등록한다.
 			append_txtlist(txtlist, filepath);
 		}
 	}
